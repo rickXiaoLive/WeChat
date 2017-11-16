@@ -5,14 +5,15 @@ import App from './App'
 import router from './router'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
-import {Row,Col} from 'element-ui'
-
+import {Row,Col,Collapse,CollapseItem } from 'element-ui'
 Vue.config.productionTip = false;
 Vue.use(MintUI);
 //let toPage = "errorPage";
-let toPage = "captain";
+let toPage = "user";
 Vue.use(Row);
 Vue.use(Col);
+Vue.use(Collapse);
+Vue.use(CollapseItem);
 
 /* eslint-disable no-new */
 new Vue({

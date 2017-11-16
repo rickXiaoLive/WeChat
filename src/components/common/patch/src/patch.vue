@@ -13,7 +13,7 @@
 
 <script>
   /**
-   * me-patch
+   * patch
    * @module components/common/patch
    * @desc 贴片
    * @param {string} [type=primary] 组件样式，可选 primary, info, success, warning ,danger, purple
@@ -26,7 +26,7 @@
    * <mt-badge color="#333">30</mt-badge>
    */
 export default {
-  name: 'me-patch',
+  name: 'patch',
   data:function () {
     return{}
   },
