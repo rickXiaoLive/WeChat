@@ -4,8 +4,11 @@
       <router-link :to="parentPath" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
-      <mt-button icon="more" slot="right"></mt-button>
+      <slot >
+        <mt-button icon="more" slot="right"></mt-button>
+      </slot>
     </mt-header>
+
   </div>
 </template>
 
@@ -20,10 +23,13 @@
    * @example
    * <me-header parentPath="/user" title="公告"></me-header>
    */
+
   export default {
     name: 'me-header',
     data() {
-      return {}
+      return {
+        more:''
+      }
     },
     props: {
       title: String,
@@ -37,4 +43,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .mint-header{
+    /*background: rgba(255,255,255,0);*/
+  }
 </style>

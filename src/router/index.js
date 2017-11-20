@@ -3,7 +3,11 @@ import Router from 'vue-router'
 import Admin from '@/components/admin'
 import ErrorPage from '@/components/common/errorPage'
 import User from '@/components/user'
+
 import Notice from '@/components/notice'
+import EditNotice from '@/components/notice/edit'
+import InsertNotice from '@/components/notice/insert'
+
 import DailyReport from '@/components/dailyReport'
 import Route from '@/components/route'
 
@@ -21,16 +25,28 @@ export default new Router({
       name: 'errorPage',
       component: ErrorPage
     },
-    {//用户
+    {//用户(主页)
       path: '/user',
       name: 'user',
       component: User
     },
+
     {//公告
       path: '/notice',
       name: 'notice',
       component: Notice
     },
+    {//编辑公告
+      path: '/editNotice',
+      name: 'editNotice',
+      component: EditNotice
+    },
+    {//添加公告
+      path: '/insertNotice',
+      name: 'insertNotice',
+      component: InsertNotice
+    },
+
     {//天报表
       path: '/dailyReport',
       name: 'dailyReport',
@@ -41,5 +57,6 @@ export default new Router({
       name: 'route',
       component: Route
     }
+
   ]
 })

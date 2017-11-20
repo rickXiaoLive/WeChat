@@ -1,6 +1,16 @@
 <template>
   <div class="notice">
-    <me-header title="公告"></me-header>
+    <mt-header fixed title="公告">
+      <router-link to="/user" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+      <router-link to="/editNotice" slot="right">
+        <mt-button >
+        <i class="el-icon-circle-plus"></i>
+        </mt-button>
+      </router-link>
+    </mt-header>
+
     <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
       <div
         v-infinite-scroll="loadMore"
@@ -10,12 +20,28 @@
         <el-row class="row" v-for="(item,index) in list">
           <el-col :span="24">
             <el-row>
-              <el-col :span="18">
+              <el-col :span="16">
                 <div @click="showMessage(index)" class="notice-item">{{ item.title }}</div>
               </el-col>
-              <el-col :span="6">
-                <div @click="showMessage(index)" class="notice-item"><i
-                  :class="item.isRead?'el-icon-success':'el-icon-info'"></i></div>
+
+              <!--<el-col :span="8">-->
+              <!--<div @click="showMessage(index)" class="notice-item"><i-->
+              <!--:class="item.isRead?'el-icon-success':'el-icon-info'"></i></div>-->
+              <!--</el-col>-->
+
+              <el-col :span="4">
+                <router-link to='/editNotice'>
+
+                  <div class="notice-item">
+                    <i class="el-icon-edit"></i>
+                  </div>
+                </router-link>
+
+              </el-col>
+              <el-col :span="4">
+                  <div @click="del(index)" class="notice-item">
+                    <i class="el-icon-delete"></i>
+                  </div>
               </el-col>
             </el-row>
           </el-col>
@@ -28,34 +54,22 @@
 </template>
 
 <script>
-  import MeHeader from '@/components/common/header'
   import {MessageBox} from 'mint-ui'
 
   export default {
     name: 'notice',
     data() {
       return {
-        list: [{title: "测试公告标题", content: "测试公告内容", isRead: false},
-          {title: "测试公告标题", content: "测试公告内容测试公告内容测试公告内容测试公告内容测试公告内容测试公告内容测试公告内容测试公告内容测试公告内容测试公告内容测试公告内容测试公告内容测试公告内容测试公告内容5757", isRead: false},
-          {title: "测试公告标题", content: "测试公告内容", isRead: false},
-          {title: "测试公告标题", content: "测试公告内容", isRead: false},
-          {title: "测试公告标题", content: "测试公告内容", isRead: false},
-          {title: "测试公告标题", content: "测试公告内容", isRead: false},
-          {title: "测试公告标题", content: "测试公告内容", isRead: false},
-          {title: "测试公告标题", content: "测试公告内容", isRead: false},
-          {title: "测试公告标题", content: "测试公告内容", isRead: false},
-          {title: "测试公告标题", content: "测试公告内容", isRead: false},
-          {title: "测试公告标题", content: "测试公告内容", isRead: false},
-          {title: "测试公告标题", content: "测试公告内容", isRead: false},
-          {title: "测试公告标题", content: "测试公告内容", isRead: false},
-          {title: "测试公告标题", content: "测试公告内容", isRead: false},
-          {title: "测试公告标题", content: "测试公告内容", isRead: false},
-          {title: "测试公告标题", content: "测试公告内容", isRead: false}
-        ],
+
         allLoaded: true,
         loading: false,
         isLoadMore: false
       }
+    },
+    computed:{
+      list(){
+        return this.$store.state.notice.list;
+      },
     },
     methods: {
       loadTop() {
@@ -81,10 +95,14 @@
         MessageBox(this.list[index].title, this.list[index].content);
         this.list[index].isRead = true;
 
+      },
+      del(index){
+        MessageBox.confirm('确定要删除'+this.list[index].title+'?').then(action => {
+          this.list.splice(index,1);
+        }).catch(e => {
+          //取消删除什么都不做
+        });
       }
-    },
-    components: {
-      MeHeader
     }
 
   }
@@ -92,9 +110,10 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .notice{
+  .notice {
     padding-top: 30px;
   }
+
   .notice-item {
     text-align: center;
     height: 50px;

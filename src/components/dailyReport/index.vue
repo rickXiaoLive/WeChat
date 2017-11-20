@@ -5,14 +5,10 @@
 </template>
 
 <script>
-  import MeHeader from '@/components/common/header'
   export default {
     name: 'dailyReport',
     data() {
       return {}
-    },
-    components: {
-      MeHeader
     }
   }
 </script>

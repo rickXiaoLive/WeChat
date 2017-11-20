@@ -5,14 +5,10 @@
 </template>
 
 <script>
-  import MeHeader from '@/components/common/header'
   export default {
     name: 'route',
     data() {
       return {}
-    },
-    components: {
-      MeHeader
     }
   }
 </script>
