@@ -5,8 +5,8 @@
         <mt-button icon="back"></mt-button>
       </router-link>
       <router-link to="/editNotice" slot="right">
-        <mt-button >
-        <i class="el-icon-circle-plus"></i>
+        <mt-button>
+          <i class="el-icon-circle-plus"></i>
         </mt-button>
       </router-link>
     </mt-header>
@@ -30,7 +30,7 @@
               <!--</el-col>-->
 
               <el-col :span="4">
-                <router-link to='/editNotice'>
+                <router-link :to='"/editNotice/id/"+index'>
 
                   <div class="notice-item">
                     <i class="el-icon-edit"></i>
@@ -39,9 +39,9 @@
 
               </el-col>
               <el-col :span="4">
-                  <div @click="del(index)" class="notice-item">
-                    <i class="el-icon-delete"></i>
-                  </div>
+                <div @click="del(index)" class="notice-item">
+                  <i class="el-icon-delete"></i>
+                </div>
               </el-col>
             </el-row>
           </el-col>
@@ -55,26 +55,35 @@
 
 <script>
   import {MessageBox} from 'mint-ui'
+  import {mapGetters} from 'vuex'
 
   export default {
     name: 'notice',
     data() {
       return {
-
         allLoaded: true,
         loading: false,
         isLoadMore: false
       }
     },
-    computed:{
-      list(){
-        return this.$store.state.notice.list;
-      },
+    beforeRouteEnter(to, from, next) {
+      next((vm) => {
+        vm.getNoticeList(vm)
+      })
+    },
+    computed: {
+      ...mapGetters({
+        list: 'list'
+        // loading: 'loading'
+      })
     },
     methods: {
+      getNoticeList(el) {
+        el.$store.dispatch('getNoticeList');
+      },
       loadTop() {
-        // ...加载更多数据
-        this.list = [{title: "新添加的公告标题", content: "测试公告内容", isRead: false}, ...this.list];
+        // ...刷新数据
+        this.$store.dispatch('getNoticeList');
         this.$refs.loadmore.onTopLoaded();
       },
       loadBottom() {
@@ -91,14 +100,15 @@
       },
       showMessage(index) {
         //这里与后台交互将this.list[index].ID 设置为已读
-
+//        el.$store.dispatch('getNoticeList');
         MessageBox(this.list[index].title, this.list[index].content);
         this.list[index].isRead = true;
 
       },
-      del(index){
-        MessageBox.confirm('确定要删除'+this.list[index].title+'?').then(action => {
-          this.list.splice(index,1);
+      del(index) {
+        MessageBox.confirm('确定要删除' + this.list[index].title + '?').then(action => {
+          this.$store.dispatch('delNotice',index);
+          this.list.splice(index, 1);
         }).catch(e => {
           //取消删除什么都不做
         });
