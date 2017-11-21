@@ -5,7 +5,7 @@ import store from './store'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import MeHeader from '@/components/common/header'
-import { Row,Col,Collapse,CollapseItem,Form,FormItem,Input,Button } from 'element-ui'
+import { Row,Col,Collapse,CollapseItem,Form,FormItem,Input,Button,Select,Option,} from 'element-ui'
 
 Vue.config.productionTip = false;
 Vue.use(MintUI);
@@ -20,7 +20,8 @@ Vue.use(Form);
 Vue.use(FormItem);
 Vue.use(Input);
 Vue.use(Button);
-
+Vue.use(Select);
+Vue.use(Option);
 
 /* eslint-disable no-new */
 new Vue({

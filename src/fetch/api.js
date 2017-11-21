@@ -10,18 +10,18 @@ axios.defaults.baseURL = 'http://localhost:7001';
 
 //POST传参序列化
 axios.interceptors.request.use((config) => {
-  if(config.method  === 'post'){
+  if (config.method === 'post') {
     config.data = qs.stringify(config.data);
   }
   return config;
-},(error) =>{
+}, (error) => {
   // _.toast("错误的传参", 'fail');
   return Promise.reject(error);
 });
 
 //返回状态判断
-axios.interceptors.response.use((res) =>{
-  if(!res.data.success){
+axios.interceptors.response.use((res) => {
+  if (!res.data.success) {
     // _.toast(res.data.msg);
     return Promise.resolve(res);
   }
@@ -43,24 +43,45 @@ export function fetch(url, params) {
   })
 }
 
+
+
 export default {
-  /**
+  /*
    * 获取公告列表
+   * 返回 ：{status:200,data:[
+   {"id": 3, "title": "测试公告标题", "type": "3", "content": "测试公告内容", "isRead": false},
+   {"id": 4,"title": "测试公告标题","type": "1","content": "测试公告内容","isRead": false},
+   ....
+   ]}
    */
-  noticeList(params) {
-    return fetch('/noticeList', params)
+  noticeList() {
+    return fetch('/noticeList');
   },
-  /**
-   * 添加公告
+  /*
+   * 添加\编辑 公告
+   *{id:ctx.id, title:ctx.title, content: ctx.content, type:ctx.type};  有id 为编辑  没有id 为添加
+   *
+   * 添加返回： {status:200,data:{id:ctx.id, title:ctx.title, content: ctx.content, type:ctx.type}}
+   * 编辑返回： {status:200,data:'ok'}
+
    */
-  insertNotice(params) {
-    return fetch('/insertNotice', params)
+  setNotice(params) {
+    return fetch('/setNotice', params);
   },
-  /**
+  /*
    * 删除公告
    * { noticeId: '6' }
+   * 返回：
+   * {status:200,data:'ok'}
    */
   delNotice(params) {
-    return fetch('/delNotice', params)
+    return fetch('/delNotice', params);
   },
+  /*
+  * 获取公告类型列表
+  * {status:200,data:[{"value": "1", "label": "通知"}, {"value": "2", "label": "提醒"}, ...]}
+  * */
+  getNoticeType() {
+    return fetch('/getNoticeType');
+  }
 }

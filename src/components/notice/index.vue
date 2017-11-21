@@ -4,7 +4,7 @@
       <router-link to="/user" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
-      <router-link to="/editNotice" slot="right">
+      <router-link to="/editNotice/add" slot="right">
         <mt-button>
           <i class="el-icon-circle-plus"></i>
         </mt-button>
@@ -30,7 +30,7 @@
               <!--</el-col>-->
 
               <el-col :span="4">
-                <router-link :to='"/editNotice/id/"+index'>
+                <router-link :to='"/editNotice/"+index'>
 
                   <div class="notice-item">
                     <i class="el-icon-edit"></i>
@@ -54,8 +54,8 @@
 </template>
 
 <script>
-  import {MessageBox} from 'mint-ui'
-  import {mapGetters} from 'vuex'
+  import { MessageBox } from 'mint-ui'
+  import { mapGetters } from 'vuex'
 
   export default {
     name: 'notice',
@@ -72,10 +72,7 @@
       })
     },
     computed: {
-      ...mapGetters({
-        list: 'list'
-        // loading: 'loading'
-      })
+      ...mapGetters(['list'])
     },
     methods: {
       getNoticeList(el) {
@@ -94,7 +91,6 @@
       loadMore() {
         this.loading = true;
         setTimeout(() => {
-          this.list = [...this.list, {title: "下一条的数据", content: "测试公告内容", isRead: false}];
           this.loading = false;
         }, 1000);
       },

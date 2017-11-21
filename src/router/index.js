@@ -6,7 +6,6 @@ import User from '@/components/user'
 
 import Notice from '@/components/notice'
 import EditNotice from '@/components/notice/edit'
-import InsertNotice from '@/components/notice/insert'
 
 import DailyReport from '@/components/dailyReport'
 import Route from '@/components/route'
@@ -36,16 +35,12 @@ export default new Router({
       name: 'notice',
       component: Notice
     },
-    {//编辑公告
-      path: '/editNotice',
+    {//编辑公告 添加公告 添加公告不传id
+      path: '/editNotice/:id',
       name: 'editNotice',
       component: EditNotice
     },
-    {//添加公告
-      path: '/insertNotice',
-      name: 'insertNotice',
-      component: InsertNotice
-    },
+
 
     {//天报表
       path: '/dailyReport',
