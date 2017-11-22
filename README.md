@@ -1,4 +1,4 @@
-# pyzy_wechat
+# pyzy_WeChat
 
 > pyzyWeChat
 
